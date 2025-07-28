@@ -6,7 +6,7 @@ import Header from "../components/Header"
 import Hero from "../components/hero"
 import Head from "next/head"
 
-const Services = dynamic(() => import("@/components/services"), {
+const Services = dynamic(() => import("../components/services"), {
   loading: () => (
     <div className="flex justify-center items-center py-16">
       <div className="h-6 w-6 rounded-full bg-green-500 animate-pulse" />
@@ -14,7 +14,7 @@ const Services = dynamic(() => import("@/components/services"), {
   ),
 })
 
-const Testimonials = dynamic(() => import("@/components/testimonials"), {
+const Testimonials = dynamic(() => import("../components/testimonials"), {
   loading: () => (
     <div className="flex justify-center items-center py-16">
       <div className="h-6 w-6 rounded-full bg-yellow-500 animate-pulse" />
@@ -22,7 +22,7 @@ const Testimonials = dynamic(() => import("@/components/testimonials"), {
   ),
 })
 
-const Contact = dynamic(() => import("@/components/contact"), {
+const Contact = dynamic(() => import("../components/contact"), {
   loading: () => (
     <div className="flex justify-center items-center py-16">
       <div className="h-6 w-6 rounded-full bg-blue-500 animate-pulse" />
@@ -30,7 +30,7 @@ const Contact = dynamic(() => import("@/components/contact"), {
   ),
 })
 
-const Footer = dynamic(() => import("@/components/footer"), {
+const Footer = dynamic(() => import("../components/footer"), {
   loading: () => (
     <div className="flex justify-center items-center py-16">
       <div className="h-6 w-6 rounded-full bg-gray-400 animate-pulse" />
