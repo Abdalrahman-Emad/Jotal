@@ -1,7 +1,4 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {
-      formats: ["image/webp"],
-
-};
+const nextConfig = {};
 
 export default nextConfig;
