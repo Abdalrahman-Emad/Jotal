@@ -4,21 +4,13 @@ import { useState } from "react"
 import { Phone, MessageCircle, Mail, MapPin, Clock, Send, CheckCircle } from "lucide-react"
 import { useLanguage } from "./language-context"
 import emailjs from "@emailjs/browser"
-import toast from 'react-hot-toast'
-
-
+import toast from "react-hot-toast"
+import { useFormik } from "formik"
+import * as Yup from "yup"
 
 const Contact = () => {
   const { language } = useLanguage()
-  const [formData, setFormData] = useState({
-    name: "",
-    phone: "",
-    email: "",
-    service: "",
-    message: "",
-  })
   const [isSubmitted, setIsSubmitted] = useState(false)
-  const [isSubmitting, setIsSubmitting] = useState(false)
 
   const content = {
     ar: {
@@ -38,6 +30,16 @@ const Contact = () => {
         thankYou: "شكراً لك!",
       },
       services: ["تنظيف المنازل والفلل", "التعقيم والتطهير", "تنسيق الحدائق", "استشارة مجانية"],
+      validation: {
+        nameRequired: "الاسم مطلوب",
+        nameMin: "الاسم يجب أن يكون أكثر من حرفين",
+        nameMax: "الاسم يجب أن يكون أقل من 50 حرف",
+        phoneRequired: "رقم الهاتف مطلوب",
+        phoneInvalid: "رقم الهاتف غير صالح (يجب أن يبدأ بـ 05 ويحتوي على 10 أرقام)",
+        serviceRequired: "يرجى اختيار نوع الخدمة",
+        emailInvalid: "البريد الإلكتروني غير صالح",
+        messageMax: "الرسالة يجب أن تكون أقل من 500 حرف",
+      },
       contact: {
         phone: "اتصل بنا",
         whatsapp: "واتساب",
@@ -70,6 +72,16 @@ const Contact = () => {
         thankYou: "Thank You!",
       },
       services: ["House & Villa Cleaning", "Sterilization & Disinfection", "Landscaping", "Free Consultation"],
+      validation: {
+        nameRequired: "Name is required",
+        nameMin: "Name must be at least 2 characters",
+        nameMax: "Name must be less than 50 characters",
+        phoneRequired: "Phone number is required",
+        phoneInvalid: "Invalid phone number (must start with 05 and contain 10 digits)",
+        serviceRequired: "Please select a service",
+        emailInvalid: "Invalid email address",
+        messageMax: "Message must be less than 500 characters",
+      },
       contact: {
         phone: "Call Us",
         whatsapp: "WhatsApp",
@@ -89,61 +101,87 @@ const Contact = () => {
 
   const phoneNumbers = ["0542661100", "0549547577", "0541145759"]
 
-  const handleSubmit = async (e) => {
-    e.preventDefault()
-    setIsSubmitting(true)
+  // Validation schema using Yup
+  const validationSchema = Yup.object({
+    name: Yup.string()
+      .min(2, content[language].validation.nameMin)
+      .max(50, content[language].validation.nameMax)
+      .required(content[language].validation.nameRequired)
+      .matches(
+        /^[a-zA-Zأ-ي\s]+$/,
+        language === "ar" ? "الاسم يجب أن يحتوي على أحرف فقط" : "Name should contain only letters",
+      ),
 
-    try {
-      await emailjs.send(
-        "service_ny25eh8", // Service ID
-        "template_j277tih", // Template ID
-        {
-          name: formData.name,
-          phone: formData.phone,
-          email: formData.email,
-          service: formData.service,
-          message: formData.message,
-        },
-        "MYYuFDdoaXnfiDfbg" // ⬅️ غيّر ده بمفتاحك العام من EmailJS
-      )
-      setIsSubmitted(true)
+    phone: Yup.string()
+      .required(content[language].validation.phoneRequired)
+      .matches(/^05[0-9]{8}$/, content[language].validation.phoneInvalid),
 
-      toast.success(
-        language === "ar"
-          ? "تم إرسال الرسالة بنجاح، سنعاود التواصل معك قريبًا."
-          : "Message sent successfully. We'll contact you soon."
-      )
+    email: Yup.string().email(content[language].validation.emailInvalid),
 
-      setFormData({
-        name: "",
-        phone: "",
-        email: "",
-        service: "",
-        message: "",
-      })
+    service: Yup.string().required(content[language].validation.serviceRequired),
 
-      setTimeout(() => {
-        setIsSubmitted(false)
-      }, 5000)
-    } catch (error) {
-      console.error("Error sending email:", error)
+    message: Yup.string().max(500, content[language].validation.messageMax),
+  })
 
-      toast.error(
-        language === "ar"
-          ? "حدث خطأ أثناء إرسال الرسالة. حاول مرة أخرى."
-          : "Something went wrong. Please try again."
-      )
-    } finally {
-      setIsSubmitting(false)
+  // Formik configuration
+  const formik = useFormik({
+    initialValues: {
+      name: "",
+      phone: "",
+      email: "",
+      service: "",
+      message: "",
+    },
+    validationSchema,
+    onSubmit: async (values, { setSubmitting, resetForm }) => {
+      try {
+        await emailjs.send(
+          "service_ny25eh8", // Service ID
+          "template_j277tih", // Template ID
+          {
+            name: values.name,
+            phone: values.phone,
+            email: values.email,
+            service: values.service,
+            message: values.message,
+          },
+          "MYYuFDdoaXnfiDfbg", // Public key
+        )
+
+        setIsSubmitted(true)
+        toast.success(
+          language === "ar"
+            ? "تم إرسال الرسالة بنجاح، سنعاود التواصل معك قريبًا."
+            : "Message sent successfully. We'll contact you soon.",
+        )
+
+        resetForm()
+
+        setTimeout(() => {
+          setIsSubmitted(false)
+        }, 5000)
+      } catch (error) {
+        console.error("Error sending email:", error)
+        toast.error(
+          language === "ar" ? "حدث خطأ أثناء إرسال الرسالة. حاول مرة أخرى." : "Something went wrong. Please try again.",
+        )
+      } finally {
+        setSubmitting(false)
+      }
+    },
+  })
+
+  // Helper function to get input classes based on validation state
+  const getInputClasses = (fieldName) => {
+    const baseClasses = "w-full px-4 py-3 border rounded-xl focus:ring-2 focus:border-transparent transition-all"
+
+    if (formik.touched[fieldName] && formik.errors[fieldName]) {
+      return `${baseClasses} border-red-300 focus:ring-red-500 bg-red-50`
+    } else if (formik.touched[fieldName] && !formik.errors[fieldName]) {
+      return `${baseClasses} border-green-300 focus:ring-green-500 bg-green-50`
+    } else {
+      return `${baseClasses} border-gray-300 focus:ring-green-500`
     }
-  }
-
-
-  const handleInputChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    })
   }
 
   return (
@@ -167,8 +205,9 @@ const Contact = () => {
                 <p className="text-gray-600">{content[language].form.success}</p>
               </div>
             ) : (
-              <form onSubmit={handleSubmit} className="space-y-6" noValidate>
+              <form onSubmit={formik.handleSubmit} className="space-y-6" noValidate>
                 <div className="grid md:grid-cols-2 gap-6">
+                  {/* Name Field */}
                   <div>
                     <label htmlFor="name" className="block text-gray-700 font-semibold mb-2">
                       {content[language].form.name} *
@@ -177,14 +216,23 @@ const Contact = () => {
                       type="text"
                       id="name"
                       name="name"
-                      value={formData.name}
-                      onChange={handleInputChange}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all"
-                      required
+                      value={formik.values.name}
+                      onChange={formik.handleChange}
+                      onBlur={formik.handleBlur}
+                      className={getInputClasses("name")}
                       aria-required="true"
+                      aria-invalid={formik.touched.name && formik.errors.name ? "true" : "false"}
+                      aria-describedby={formik.touched.name && formik.errors.name ? "name-error" : undefined}
                     />
+                    {formik.touched.name && formik.errors.name && (
+                      <p id="name-error" className="mt-2 text-sm text-red-600 flex items-center gap-1" role="alert">
+                        <span className="w-4 h-4 rounded-full bg-red-100 flex items-center justify-center">!</span>
+                        {formik.errors.name}
+                      </p>
+                    )}
                   </div>
 
+                  {/* Phone Field */}
                   <div>
                     <label htmlFor="phone" className="block text-gray-700 font-semibold mb-2">
                       {content[language].form.phone} *
@@ -193,15 +241,25 @@ const Contact = () => {
                       type="tel"
                       id="phone"
                       name="phone"
-                      value={formData.phone}
-                      onChange={handleInputChange}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all"
-                      required
+                      value={formik.values.phone}
+                      onChange={formik.handleChange}
+                      onBlur={formik.handleBlur}
+                      className={getInputClasses("phone")}
+                      placeholder="05XXXXXXXX"
                       aria-required="true"
+                      aria-invalid={formik.touched.phone && formik.errors.phone ? "true" : "false"}
+                      aria-describedby={formik.touched.phone && formik.errors.phone ? "phone-error" : undefined}
                     />
+                    {formik.touched.phone && formik.errors.phone && (
+                      <p id="phone-error" className="mt-2 text-sm text-red-600 flex items-center gap-1" role="alert">
+                        <span className="w-4 h-4 rounded-full bg-red-100 flex items-center justify-center">!</span>
+                        {formik.errors.phone}
+                      </p>
+                    )}
                   </div>
                 </div>
 
+                {/* Email Field */}
                 <div>
                   <label htmlFor="email" className="block text-gray-700 font-semibold mb-2">
                     {content[language].form.email}
@@ -210,12 +268,22 @@ const Contact = () => {
                     type="email"
                     id="email"
                     name="email"
-                    value={formData.email}
-                    onChange={handleInputChange}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all"
+                    value={formik.values.email}
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    className={getInputClasses("email")}
+                    aria-invalid={formik.touched.email && formik.errors.email ? "true" : "false"}
+                    aria-describedby={formik.touched.email && formik.errors.email ? "email-error" : undefined}
                   />
+                  {formik.touched.email && formik.errors.email && (
+                    <p id="email-error" className="mt-2 text-sm text-red-600 flex items-center gap-1" role="alert">
+                      <span className="w-4 h-4 rounded-full bg-red-100 flex items-center justify-center">!</span>
+                      {formik.errors.email}
+                    </p>
+                  )}
                 </div>
 
+                {/* Service Field */}
                 <div>
                   <label htmlFor="service" className="block text-gray-700 font-semibold mb-2">
                     {content[language].form.service} *
@@ -223,11 +291,13 @@ const Contact = () => {
                   <select
                     id="service"
                     name="service"
-                    value={formData.service}
-                    onChange={handleInputChange}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all"
-                    required
+                    value={formik.values.service}
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    className={getInputClasses("service")}
                     aria-required="true"
+                    aria-invalid={formik.touched.service && formik.errors.service ? "true" : "false"}
+                    aria-describedby={formik.touched.service && formik.errors.service ? "service-error" : undefined}
                   >
                     <option value="">{content[language].form.selectService}</option>
                     {content[language].services.map((service, index) => (
@@ -236,36 +306,68 @@ const Contact = () => {
                       </option>
                     ))}
                   </select>
+                  {formik.touched.service && formik.errors.service && (
+                    <p id="service-error" className="mt-2 text-sm text-red-600 flex items-center gap-1" role="alert">
+                      <span className="w-4 h-4 rounded-full bg-red-100 flex items-center justify-center">!</span>
+                      {formik.errors.service}
+                    </p>
+                  )}
                 </div>
 
+                {/* Message Field */}
                 <div>
                   <label htmlFor="message" className="block text-gray-700 font-semibold mb-2">
                     {content[language].form.message}
+                    <span className="text-sm text-gray-500 ml-2">({formik.values.message.length}/500)</span>
                   </label>
                   <textarea
                     id="message"
                     name="message"
-                    value={formData.message}
-                    onChange={handleInputChange}
+                    value={formik.values.message}
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
                     rows="4"
-                    className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all resize-none"
+                    className={`${getInputClasses("message")} resize-none`}
                     placeholder={content[language].form.messagePlaceholder}
-                  ></textarea>
+                    aria-invalid={formik.touched.message && formik.errors.message ? "true" : "false"}
+                    aria-describedby={formik.touched.message && formik.errors.message ? "message-error" : undefined}
+                  />
+                  {formik.touched.message && formik.errors.message && (
+                    <p id="message-error" className="mt-2 text-sm text-red-600 flex items-center gap-1" role="alert">
+                      <span className="w-4 h-4 rounded-full bg-red-100 flex items-center justify-center">!</span>
+                      {formik.errors.message}
+                    </p>
+                  )}
                 </div>
 
+                {/* Submit Button */}
                 <button
                   type="submit"
-                  disabled={isSubmitting}
+                  disabled={formik.isSubmitting || !formik.isValid}
                   className="w-full bg-gradient-to-r from-green-600 to-green-700 text-white py-4 rounded-xl font-semibold hover:from-green-700 hover:to-green-800 transition-all shadow-lg hover:shadow-xl flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
                 >
                   <Send size={20} aria-hidden="true" />
-                  {isSubmitting ? content[language].form.submitting : content[language].form.submit}
+                  {formik.isSubmitting ? content[language].form.submitting : content[language].form.submit}
                 </button>
+
+                {/* Form Summary */}
+                {Object.keys(formik.errors).length > 0 && formik.submitCount > 0 && (
+                  <div className="bg-red-50 border border-red-200 rounded-lg p-4" role="alert">
+                    <h4 className="text-red-800 font-semibold mb-2">
+                      {language === "ar" ? "يرجى تصحيح الأخطاء التالية:" : "Please correct the following errors:"}
+                    </h4>
+                    <ul className="text-red-700 text-sm space-y-1">
+                      {Object.entries(formik.errors).map(([field, error]) => (
+                        <li key={field}>• {error}</li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
               </form>
             )}
           </div>
 
-          {/* Contact Information */}
+          {/* Contact Information - Keep the existing contact info section */}
           <div className="space-y-8">
             {/* Quick Contact Cards */}
             <div className="grid gap-6">
@@ -352,7 +454,6 @@ const Contact = () => {
                 </div>
               </div>
             </div>
-
           </div>
         </div>
       </div>
