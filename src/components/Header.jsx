@@ -39,7 +39,7 @@ const Header = () => {
                     {/* Logo */}
                     <div className="flex items-center gap-3">
                         <Image
-                            src="/logo.webP"
+                            src="/logo.WebP"
                             alt="Jotal Logo - شركة جوتال للتنظيف والتعقيم"
                             width={60}
                             height={60}
