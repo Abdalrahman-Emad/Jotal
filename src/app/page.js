@@ -1,9 +1,9 @@
 "use client"
 
 import dynamic from "next/dynamic"
-import { LanguageProvider } from "@/components/language-context"
-import Header from "@/components/header"
-import Hero from "@/components/hero"
+import { LanguageProvider } from "../components/language-context"
+import Header from "../components/Header"
+import Hero from "../components/hero"
 import Head from "next/head"
 
 const Services = dynamic(() => import("@/components/services"), {
