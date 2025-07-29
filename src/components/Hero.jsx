@@ -9,10 +9,10 @@ const Hero = () => {
 
   const content = {
     ar: {
-      title: "حلول شاملة للنظافة والتعقيم",
+      title: "حلول شاملة لمكافحة الحشرات و النظافة والتعقيم ",
       subtitle: "مع جوتال العالمية",
       description:
-        "نقدم خدمات تنظيف المنازل والفلل، التعقيم والتطهير، وأعمال تنسيق الحدائق بأعلى معايير الجودة والاحترافية",
+        "نقدم خدمات مكافحة الحشرات، وتنظيف المنازل والفلل، التعقيم والتطهير، وأعمال تنسيق الحدائق بأعلى معايير الجودة والاحترافية",
       cta: "احجز خدمتك الآن",
       call: "اتصل بنا",
       whatsapp: "واتساب",
@@ -23,9 +23,9 @@ const Hero = () => {
     },
     en: {
       title: "Complete Solutions for Cleaning & Sterilization",
-      subtitle: "with Global Jotal",
+      subtitle: "with Jotal International",
       description:
-        "We provide house and villa cleaning, sterilization and disinfection, and landscaping services with the highest standards of quality and professionalism",
+        "We provide house and villa cleaning, sterilization and disinfection, Pest Control and landscaping services with the highest standards of quality and professionalism",
       cta: "Book Your Service Now",
       call: "Call Us",
       whatsapp: "WhatsApp",

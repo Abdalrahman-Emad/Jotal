@@ -11,7 +11,7 @@ const Footer = () => {
     ar: {
       company: "شركة جوتال العالمية",
       description:
-        "نقدم خدمات تنظيف المنازل والفلل، التعقيم والتطهير، وتنسيق الحدائق بأعلى معايير الجودة والاحترافية في المملكة العربية السعودية.",
+        "نقدم خدمات تنظيف المنازل والفلل، التعقيم والتطهير، ومكافحة الحشرات، وتنسيق الحدائق بأعلى معايير الجودة والاحترافية في المملكة العربية السعودية.",
       quickLinks: "روابط سريعة",
       services: "خدماتنا",
       contact: "تواصل معنا",
@@ -31,8 +31,8 @@ const Footer = () => {
         terms: "الشروط والأحكام",
       },
       servicesList: {
-        cleaning: "تنظيف المنازل والفلل",
-        sterilization: "التعقيم والتطهير",
+        cleaning: "مكافحة الحشرات وتنظيف المنازل والفلل",
+        sterilization: "التعقيم والتطهير ",
         landscaping: "تنسيق الحدائق",
       },
       hours: {
@@ -42,7 +42,7 @@ const Footer = () => {
     en: {
       company: "Jotal Company",
       description:
-        "We provide house and villa cleaning, sterilization and disinfection, and landscaping services with the highest standards of quality and professionalism in Saudi Arabia.",
+        "We provide house and villa cleaning, Pest Control, sterilization and disinfection, and landscaping services with the highest standards of quality and professionalism in Saudi Arabia.",
       quickLinks: "Quick Links",
       services: "Our Services",
       contact: "Contact Us",
@@ -63,7 +63,7 @@ const Footer = () => {
       },
       servicesList: {
         cleaning: "House & Villa Cleaning",
-        sterilization: "Sterilization & Disinfection",
+        sterilization: "Sterilization & Disinfection & Pest Control",
         landscaping: "Landscaping",
       },
       hours: {
@@ -82,7 +82,7 @@ const Footer = () => {
           {/* Company Info */}
           <div className="lg:col-span-1">
             <div className="flex items-center gap-3 mb-6">
-              <Image src="/logo.jpg" alt="Jotal Logo" width={48} height={48} className="object-contain rounded-lg" />
+              <Image src="/logo.webp" alt="Jotal Logo" width={48} height={48} className="object-contain rounded-lg" />
               <div>
                 <h3 className="text-2xl font-bold text-white">Jotal</h3>
                 <p className="text-green-300 text-sm" lang="en">

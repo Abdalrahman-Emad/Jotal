@@ -46,7 +46,13 @@ const Header = () => {
                             className="object-contain rounded-lg"
                             priority
                         />
+
+                        <div>
+                            <h1 className="font-bold text-2xl text-green-700">Jotal International Co</h1>
+                        </div>
+
                     </div>
+
 
                     {/* Desktop Navigation */}
                     <nav
