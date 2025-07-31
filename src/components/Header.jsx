@@ -82,7 +82,7 @@ const Header = () => {
                         {/* Language Toggle */}
                         <button
                             onClick={toggleLanguage}
-                            className="flex items-center gap-2 px-3 py-2 rounded-lg border border-gray-300 hover:border-green-500 transition-colors focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
+                            className="flex items-center gap-2 px-3 py-2 rounded-lg border border-black text-black hover:border-green-500 transition-colors focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
                             aria-label={content[language].languageToggle}
                         >
                             <Globe size={16} aria-hidden="true" />
@@ -159,7 +159,7 @@ const Header = () => {
                                 </a>
                                 <button
                                     onClick={toggleLanguage}
-                                    className="px-4 py-2 rounded-full border border-gray-300 hover:border-green-500 transition-colors focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
+                                    className="px-4 py-2 rounded-full border border-black text-black hover:border-green-500 transition-colors focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
                                     aria-label={content[language].languageToggle}
                                 >
                                     {language === "ar" ? "EN" : "AR"}

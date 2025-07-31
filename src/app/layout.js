@@ -24,7 +24,7 @@ export const metadata = {
     title: "Jotal - Professional Cleaning & Landscaping Services",
     description:
       "Expert house cleaning, sterilization, and landscaping services in Saudi Arabia",
-    url: "https://jotal.sa",
+    url: "https://jotalpestcontrol.com",
     siteName: "Jotal",
     locale: "ar_SA",
     alternateLocale: "en_US",
@@ -36,7 +36,7 @@ export const metadata = {
     description: "Expert cleaning, sterilization, and landscaping services",
   },
   alternates: {
-    canonical: "https://jotal.sa",
+    canonical: "https://jotalpestcontrol.com",
   },
 };
 
