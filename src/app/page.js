@@ -60,6 +60,10 @@ export default function Home() {
 
         {/* Favicon and Icons */}
         <link rel="icon" href="/favicon.ico" />
+
+        <link rel="icon" sizes="any" href="/favicon.ico" />
+
+        {/* PNG favicons  */}
         <link
           rel="icon"
           type="image/png"
@@ -73,11 +77,6 @@ export default function Home() {
           href="/favicon-32x32.png"
         />
         <link
-          rel="apple-touch-icon"
-          sizes="180x180"
-          href="/apple-touch-icon.png"
-        />
-        <link
           rel="icon"
           type="image/png"
           sizes="192x192"
@@ -89,10 +88,18 @@ export default function Home() {
           sizes="512x512"
           href="/android-chrome-512x512.png"
         />
-        <link rel="icon" sizes="any" href="/favicon.ico" />
 
+        {/* Apple Touch Icon  */}
+        <link
+          rel="apple-touch-icon"
+          sizes="180x180"
+          href="/apple-touch-icon.png"
+        />
+
+        {/* Manifest */}
         <link rel="manifest" href="/site.webmanifest" />
-        <meta name="apple-mobile-web-app-title" content="Jotal Pest Control" />
+        <meta name="apple-mobile-web-app-title" content="Jotal" />
+        <meta name="application-name" content="Jotal" />
         <meta name="theme-color" content="#ffffff" />
 
         {/* Open Graph / Facebook */}
