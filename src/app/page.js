@@ -45,6 +45,7 @@ export default function Home() {
         <title>
           جوتال | شركة مكافحة الحشرات بجدة - مكافحة الصراصير والنمل والفئران
         </title>
+
         <meta
           name="description"
           content="شركة جوتال لمكافحة الحشرات بجدة تقدم أفضل خدمات مكافحة الصراصير، النمل الأبيض، الفئران، بق الفراش، الحشرات الزاحفة، ورش المبيدات المنزلية بأمان وفعالية عالية."
@@ -57,6 +58,44 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="author" content="Jotal" />
 
+        {/* Favicon and Icons */}
+        <link rel="icon" href="/favicon.ico" />
+        <link
+          rel="icon"
+          type="image/png"
+          sizes="16x16"
+          href="/favicon-16x16.png"
+        />
+        <link
+          rel="icon"
+          type="image/png"
+          sizes="32x32"
+          href="/favicon-32x32.png"
+        />
+        <link
+          rel="apple-touch-icon"
+          sizes="180x180"
+          href="/apple-touch-icon.png"
+        />
+        <link
+          rel="icon"
+          type="image/png"
+          sizes="192x192"
+          href="/android-chrome-192x192.png"
+        />
+        <link
+          rel="icon"
+          type="image/png"
+          sizes="512x512"
+          href="/android-chrome-512x512.png"
+        />
+        <link rel="icon" sizes="any" href="/favicon.ico" />
+
+        <link rel="manifest" href="/site.webmanifest" />
+        <meta name="apple-mobile-web-app-title" content="Jotal Pest Control" />
+        <meta name="theme-color" content="#ffffff" />
+
+        {/* Open Graph / Facebook */}
         <meta property="og:type" content="website" />
         <meta property="og:title" content="شركة مكافحة الحشرات بجدة | جوتال" />
         <meta
@@ -69,28 +108,13 @@ export default function Home() {
           content="https://jotalpestcontrol.com/logo.webp"
         />
 
+        {/* Twitter */}
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="شركة مكافحة الحشرات بجدة | جوتال" />
         <meta
           name="twitter:description"
           content="خدمة مكافحة الحشرات والصراصير بجدة باستخدام أفضل المبيدات الآمنة."
         />
-
-        <link
-          rel="icon"
-          type="image/png"
-          href="/favicon-96x96.png"
-          sizes="96x96"
-        />
-        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-        <link rel="shortcut icon" href="/favicon.ico" />
-        <link
-          rel="apple-touch-icon"
-          sizes="180x180"
-          href="/apple-touch-icon.png"
-        />
-        <meta name="apple-mobile-web-app-title" content="Jotal Pest Control" />
-        <link rel="manifest" href="/site.webmanifest" />
 
         {/* Structured Data (Schema.org) */}
         <script
