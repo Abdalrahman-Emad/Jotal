@@ -122,7 +122,7 @@ export default function Home() {
           content="خدمة مكافحة الحشرات والصراصير بجدة باستخدام أفضل المبيدات الآمنة."
         />
 
-        {/* Structured Data (Schema.org) */}
+        {/* LocalBusiness structured data */}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
@@ -140,6 +140,20 @@ export default function Home() {
               },
               description:
                 "شركة جوتال تقدم خدمات مكافحة الحشرات بجدة بما في ذلك الصراصير، النمل، الفئران، ورش المبيدات المنزلية.",
+            }),
+          }}
+        />
+
+        {/* Organization structured data */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "Organization",
+              name: "Jotal",
+              url: "https://jotalpestcontrol.com",
+              logo: "https://jotalpestcontrol.com/logo.webp",
             }),
           }}
         />
