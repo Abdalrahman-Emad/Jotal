@@ -89,15 +89,14 @@ export default function Home() {
           href="/android-chrome-512x512.png"
         />
 
+        <link rel="icon" type="image/svg+xml" href="/icon0.svg" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/icon1.png" />
+
         {/* Apple Touch Icon  */}
-        <link
-          rel="apple-touch-icon"
-          sizes="180x180"
-          href="/apple-touch-icon.png"
-        />
+        <link rel="apple-touch-icon" href="/apple-icon.png" />
 
         {/* Manifest */}
-        <link rel="manifest" href="/site.webmanifest" />
+        <link rel="manifest" href="/manifest.json" />
         <meta name="apple-mobile-web-app-title" content="Jotal" />
         <meta name="application-name" content="Jotal" />
         <meta name="theme-color" content="#ffffff" />
