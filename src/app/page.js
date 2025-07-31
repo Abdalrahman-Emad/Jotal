@@ -58,12 +58,25 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="author" content="Jotal" />
 
+        {/* Google Tag (gtag.js) */}
+        <script
+          async
+          src="https://www.googletagmanager.com/gtag/js?id=AW-17408853706"
+        ></script>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'AW-17408853706');
+      `,
+          }}
+        />
+
         {/* Favicon and Icons */}
         <link rel="icon" href="/favicon.ico" />
-
         <link rel="icon" sizes="any" href="/favicon.ico" />
-
-        {/* PNG favicons  */}
         <link
           rel="icon"
           type="image/png"
@@ -88,14 +101,9 @@ export default function Home() {
           sizes="512x512"
           href="/android-chrome-512x512.png"
         />
-
         <link rel="icon" type="image/svg+xml" href="/icon0.svg" />
         <link rel="icon" type="image/png" sizes="32x32" href="/icon1.png" />
-
-        {/* Apple Touch Icon  */}
         <link rel="apple-touch-icon" href="/apple-icon.png" />
-
-        {/* Manifest */}
         <link rel="manifest" href="/manifest.json" />
         <meta name="apple-mobile-web-app-title" content="Jotal" />
         <meta name="application-name" content="Jotal" />
