@@ -173,7 +173,7 @@ const Contact = () => {
 
   // Helper function to get input classes based on validation state
   const getInputClasses = (fieldName) => {
-    const baseClasses = "w-full px-4 py-3 border rounded-xl focus:ring-2 focus:border-transparent transition-all"
+    const baseClasses = "w-full px-4 py-3 border rounded-xl focus:ring-2 focus:border-transparent text-black transition-all"
 
     if (formik.touched[fieldName] && formik.errors[fieldName]) {
       return `${baseClasses} border-red-300 focus:ring-red-500 bg-red-50`
