@@ -71,7 +71,7 @@ const Contact = () => {
         messagePlaceholder: "Write your message here...",
         thankYou: "Thank You!",
       },
-      services: ["House & Villa Cleaning", "Sterilization & Disinfection", "Landscaping", "Free Consultation"],
+      services: ["Pest Control","House & Villa Cleaning", "Sterilization & Disinfection", "Landscaping", "Free Consultation"],
       validation: {
         nameRequired: "Name is required",
         nameMin: "Name must be at least 2 characters",
