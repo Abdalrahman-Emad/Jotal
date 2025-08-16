@@ -5,6 +5,7 @@ import { LanguageProvider } from "../components/language-context";
 import Header from "../components/Header";
 import Hero from "../components/Hero";
 import Head from "next/head";
+import BlogPost from "@/components/blog-post";
 
 const Services = dynamic(() => import("../components/Services"), {
   loading: () => (
@@ -21,6 +22,15 @@ const Testimonials = dynamic(() => import("../components/Testimonials"), {
     </div>
   ),
 });
+
+const Blog = dynamic(() => import("../components/Blog"), {
+  loading: () => (
+    <div className="flex justify-center items-center py-16">
+      <div className="h-6 w-6 rounded-full bg-red-500 animate-pulse" />
+    </div>
+  ),
+});
+
 
 const Contact = dynamic(() => import("../components/contact"), {
   loading: () => (
@@ -167,16 +177,11 @@ export default function Home() {
         />
       </Head>
 
-      <LanguageProvider>
-        <main className="min-h-screen">
-          <Header />
           <Hero />
           <Services />
           <Testimonials />
+          <Blog />
           <Contact />
-          <Footer />
-        </main>
-      </LanguageProvider>
     </>
   );
 }

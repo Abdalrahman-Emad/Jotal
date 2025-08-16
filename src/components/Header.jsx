@@ -61,19 +61,19 @@ const Header = () => {
                         aria-label={language === "ar" ? "التنقل الرئيسي" : "Main navigation"}
                     >
                         <a
-                            href="#services"
+                            href="/#services"
                             className="text-gray-700 hover:text-green-700 transition-colors font-medium focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 rounded-md px-2 py-1"
                         >
                             {content[language].services}
                         </a>
                         <a
-                            href="#about"
+                            href="/#about"
                             className="text-gray-700 hover:text-green-700 transition-colors font-medium focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 rounded-md px-2 py-1"
                         >
                             {content[language].about}
                         </a>
                         <a
-                            href="#contact"
+                            href="/#contact"
                             className="text-gray-700 hover:text-green-700 transition-colors font-medium focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 rounded-md px-2 py-1"
                         >
                             {content[language].contact}

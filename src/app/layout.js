@@ -1,6 +1,9 @@
 import "./globals.css";
 import { Inter } from "next/font/google";
 import { Toaster } from "react-hot-toast";
+import { LanguageProvider } from "@/components/language-context";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 
 // تحميل الخط
 const inter = Inter({
@@ -10,8 +13,7 @@ const inter = Inter({
 });
 
 export const metadata = {
-  title:
-    "Jotal - خدمات التنظيف والتعقيم وتنسيق الحدائق | House Cleaning, Sterilization & Landscaping Services",
+  title: "Jotal - خدمات التنظيف والتعقيم وتنسيق الحدائق | House Cleaning, Sterilization & Landscaping Services",
   description:
     "شركة جوتال تقدم خدمات تنظيف المنازل والفلل، التعقيم والتطهير، وتنسيق الحدائق بأعلى معايير الجودة في السعودية | Jotal provides professional house cleaning, sterilization and landscaping services in Saudi Arabia",
   keywords:
@@ -40,13 +42,16 @@ export const metadata = {
   },
 };
 
-// RootLayout component
 export default function RootLayout({ children }) {
   return (
     <html lang="ar" dir="rtl">
       <body className={`${inter.className} antialiased bg-white text-gray-900`}>
-        {children}
-        <Toaster position="top-center" reverseOrder={false} />
+        <LanguageProvider>
+          <Header />
+          <main className="min-h-screen">{children}</main>
+          <Footer />
+          <Toaster position="top-center" reverseOrder={false} />
+        </LanguageProvider>
       </body>
     </html>
   );
