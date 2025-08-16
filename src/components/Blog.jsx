@@ -103,7 +103,7 @@ const Blog = () => {
 
   return (
     <section className="py-20 bg-gradient-to-br from-slate-50 via-white to-emerald-50" id="blog"
-      style={{ backgroundColor: "#f8fafc" }}
+      style={{ backgroundColor: "#ffffff" }}
 >
       <div className="max-w-7xl mx-auto px-6">
         {/* Section Header */}
