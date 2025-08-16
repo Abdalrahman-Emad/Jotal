@@ -118,6 +118,8 @@ export default function Home() {
         <meta name="apple-mobile-web-app-title" content="Jotal" />
         <meta name="application-name" content="Jotal" />
         <meta name="theme-color" content="#ffffff" />
+        <meta name="color-scheme" content="light only"/>
+
 
         {/* Open Graph / Facebook */}
         <meta property="og:type" content="website" />
