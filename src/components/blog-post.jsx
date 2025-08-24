@@ -1,21 +1,21 @@
 "use client"
+
 import Image from "next/image"
 import Link from "next/link"
 import { useLanguage } from "./language-context"
 import { Calendar, User, ArrowLeft, Clock, Tag } from "lucide-react"
 import { motion } from "framer-motion"
+import Script from "next/script"
+import Head from "next/head"
 
 const BlogPost = ({ enArticle, arArticle }) => {
     const { language } = useLanguage()
 
-    // Select the appropriate article based on current language
     const article = language === "ar" ? arArticle : enArticle
+    const fallbackArticle = enArticle || arArticle
+    const currentArticle = article || fallbackArticle
 
-    // Fallback to English if Arabic article doesn't exist
-    if (!article) {
-        const fallbackArticle = enArticle || arArticle
-        if (!fallbackArticle) return <div>Article not found</div>
-    }
+    if (!currentArticle) return <div>Article not found</div>
 
     const content = {
         en: {
@@ -34,123 +34,193 @@ const BlogPost = ({ enArticle, arArticle }) => {
         },
     }
 
-    const currentArticle = article || enArticle || arArticle
-
     return (
+        <>
+            {/* SEO Meta */}
+            <Head>
+                <title>{currentArticle.title}</title>
+                <meta name="description" content={currentArticle.excerpt} />
+                <meta property="og:title" content={currentArticle.title} />
+                <meta property="og:description" content={currentArticle.excerpt} />
+                <meta property="og:type" content="article" />
+                <meta property="og:image" content={currentArticle.image} />
 
-        <div className="min-h-screen bg-white">
-            <div className="max-w-4xl mx-auto px-6 py-12">
-                {/* Back Navigation */}
-                <motion.div
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 0.5 }}
-                    className="mb-8"
-                >
-                    <Link
-                        href="/#blog"
-                        className={`inline-flex items-center gap-2 text-emerald-600 hover:text-emerald-700 font-medium transition-colors ${language === "ar" ? "flex-row-reverse" : ""}`}
+                <Script type="application/ld+json" id="ld-json-breadcrumb">
+                    {JSON.stringify({
+                        "@context": "https://schema.org",
+                        "@type": "BreadcrumbList",
+                        "itemListElement": [
+                            {
+                                "@type": "ListItem",
+                                "position": 1,
+                                "name": language === "ar" ? "الرئيسية" : "Home",
+                                "item": `${process.env.NEXT_PUBLIC_SITE_URL}/`
+                            },
+                            {
+                                "@type": "ListItem",
+                                "position": 2,
+                                "name": language === "ar" ? "المدونة" : "Blog",
+                                "item": `${process.env.NEXT_PUBLIC_SITE_URL}/#blog`
+                            },
+                            {
+                                "@type": "ListItem",
+                                "position": 3,
+                                "name": currentArticle.title,
+                                "item": `${process.env.NEXT_PUBLIC_SITE_URL}/blog/${currentArticle.slug}`
+                            }
+                        ]
+                    })}
+                </Script>
+
+            </Head>
+
+            <div className="min-h-screen bg-white" itemScope itemType="https://schema.org/BlogPosting">
+                <div className="max-w-4xl mx-auto px-6 py-12">
+
+                    {/* Back Navigation */}
+                    <motion.div
+                        initial={{ opacity: 0, x: -20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ duration: 0.5 }}
+                        className="mb-8"
                     >
-                        <ArrowLeft size={20} className={language === "ar" ? "rotate-180" : ""} />
-                        <span>{content[language].backToBlogs}</span>
-                    </Link>
-                </motion.div>
+                        <Link
+                            href="/#blog"
+                            className={`inline-flex items-center gap-2 text-emerald-600 hover:text-emerald-700 font-medium transition-colors ${language === "ar" ? "flex-row-reverse" : ""}`}
+                        >
+                            <ArrowLeft size={20} className={language === "ar" ? "rotate-180" : ""} />
+                            <span>{content[language].backToBlogs}</span>
+                        </Link>
+                    </motion.div>
 
-                {/* Article Header */}
-                <motion.header
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.6 }}
-                    className="mb-12"
-                >
-                    {/* Featured Image */}
-                    <div className="relative mb-8 rounded-3xl overflow-hidden shadow-2xl">
-                        <Image
-                            src={currentArticle.image || "/placeholder.svg?height=400&width=800&query=pest control article"}
-                            alt={currentArticle.title}
-                            width={800}
-                            height={400}
-                            className="w-full h-80 md:h-96 object-cover"
-                            priority
-                        />
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent"></div>
-                    </div>
-
-                    {/* Article Meta */}
-                    <div
-                        className={`flex flex-wrap items-center gap-6 mb-6 text-slate-600 ${language === "ar" ? "flex-row-reverse" : ""}`}
+                    {/* Article Header */}
+                    <motion.header
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.6 }}
+                        className="mb-12"
                     >
-                        <div className="flex items-center gap-2">
-                            <User size={18} className="text-emerald-600" />
-                            <span className="font-medium">
-                                {content[language].by} {currentArticle.author}
-                            </span>
+                        {/* Featured Image */}
+                        <div className="relative mb-8 rounded-3xl overflow-hidden shadow-2xl">
+                            <Image
+                                src={currentArticle.image || "/placeholder.svg?height=400&width=800&query=pest control article"}
+                                alt={currentArticle.title}
+                                width={800}
+                                height={400}
+                                className="w-full h-80 md:h-96 object-cover"
+                                priority
+                                itemProp="image"
+
+                            />
+                            <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent"></div>
                         </div>
-                        <div className="flex items-center gap-2">
-                            <Calendar size={18} className="text-emerald-600" />
-                            <time dateTime={currentArticle.date}>{currentArticle.date}</time>
-                        </div>
-                        {currentArticle.readTime && (
+
+                        {/* Article Meta */}
+                        <div
+                            className={`flex flex-wrap items-center gap-6 mb-6 text-slate-600 ${language === "ar" ? "flex-row-reverse" : ""}`}
+                        >
                             <div className="flex items-center gap-2">
-                                <Clock size={18} className="text-emerald-600" />
-                                <span>{currentArticle.readTime}</span>
+                                <User size={18} className="text-emerald-600" />
+                                <span className="font-medium" itemProp="author">{content[language].by} {currentArticle.author}</span>
+                            </div>
+                            <div className="flex items-center gap-2">
+                                <Calendar size={18} className="text-emerald-600" />
+                                <time dateTime={currentArticle.date} itemProp="datePublished">{currentArticle.date}</time>
+                            </div>
+                            {currentArticle.readTime && (
+                                <div className="flex items-center gap-2">
+                                    <Clock size={18} className="text-emerald-600" />
+                                    <span>{currentArticle.readTime}</span>
+                                </div>
+                            )}
+                        </div>
+
+                        {/* Article Title */}
+                        <h1
+                            className={`text-3xl md:text-5xl font-bold text-slate-800 leading-tight mb-6 ${language === "ar" ? "text-right" : "text-left"}`}
+                            itemProp="headline"
+                        >
+                            {currentArticle.title}
+                        </h1>
+
+                        {/* Tags */}
+                        {currentArticle.tags && currentArticle.tags.length > 0 && (
+                            <div className={`flex flex-wrap items-center gap-3 ${language === "ar" ? "flex-row-reverse" : ""}`}>
+                                <div className="flex items-center gap-2 text-slate-600">
+                                    <Tag size={16} className="text-emerald-600" />
+                                    <span className="font-medium">{content[language].tags}</span>
+                                </div>
+                                {currentArticle.tags.map((tag, index) => (
+                                    <span key={index} className="px-3 py-1 bg-emerald-100 text-emerald-700 rounded-full text-sm font-medium">{tag}</span>
+                                ))}
                             </div>
                         )}
-                    </div>
+                    </motion.header>
 
-                    {/* Article Title */}
-                    <h1
-                        className={`text-3xl md:text-5xl font-bold text-slate-800 leading-tight mb-6 ${language === "ar" ? "text-right" : "text-left"}`}
+                    {/* Article Content */}
+                    <motion.article
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.6, delay: 0.2 }}
+                        className={`prose prose-lg max-w-none ${language === "ar" ? "text-right" : "text-left"}`}
+                        itemProp="articleBody"
                     >
-                        {currentArticle.title}
-                    </h1>
+                        <div
+                            className="text-slate-700 leading-relaxed text-lg"
+                            dangerouslySetInnerHTML={{ __html: currentArticle.full }}
+                        />
+                    </motion.article>
 
-                    {/* Tags */}
-                    {currentArticle.tags && currentArticle.tags.length > 0 && (
-                        <div className={`flex flex-wrap items-center gap-3 ${language === "ar" ? "flex-row-reverse" : ""}`}>
-                            <div className="flex items-center gap-2 text-slate-600">
-                                <Tag size={16} className="text-emerald-600" />
-                                <span className="font-medium">{content[language].tags}</span>
-                            </div>
-                            {currentArticle.tags.map((tag, index) => (
-                                <span key={index} className="px-3 py-1 bg-emerald-100 text-emerald-700 rounded-full text-sm font-medium">
-                                    {tag}
-                                </span>
-                            ))}
-                        </div>
-                    )}
-                </motion.header>
-
-                {/* Article Content */}
-                <motion.article
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.6, delay: 0.2 }}
-                    className={`prose prose-lg max-w-none ${language === "ar" ? "text-right" : "text-left"}`}
-                >
-                    <div
-                        className="text-slate-700 leading-relaxed text-lg"
-                        dangerouslySetInnerHTML={{ __html: currentArticle.full }}
-                    />
-                </motion.article>
-
-                {/* Back to Articles Footer */}
-                <motion.footer
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.6, delay: 0.4 }}
-                    className="mt-16 pt-8 border-t border-slate-200"
-                >
-                    <Link
-                        href="/#blog"
-                        className={`inline-flex items-center gap-2 text-emerald-600 hover:text-emerald-700 font-semibold text-lg transition-colors ${language === "ar" ? "flex-row-reverse" : ""}`}
+                    {/* Back to Articles Footer */}
+                    <motion.footer
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.6, delay: 0.4 }}
+                        className="mt-16 pt-8 border-t border-slate-200"
                     >
-                        <ArrowLeft size={20} className={language === "ar" ? "rotate-180" : ""} />
-                        <span>{content[language].backToBlogs}</span>
-                    </Link>
-                </motion.footer>
+                        <Link
+                            href="/#blog"
+                            className={`inline-flex items-center gap-2 text-emerald-600 hover:text-emerald-700 font-semibold text-lg transition-colors ${language === "ar" ? "flex-row-reverse" : ""}`}
+                        >
+                            <ArrowLeft size={20} className={language === "ar" ? "rotate-180" : ""} />
+                            <span>{content[language].backToBlogs}</span>
+                        </Link>
+                    </motion.footer>
+
+                    {/* Structured Data */}
+                    <Script type="application/ld+json" id="ld-json-blog-post">
+                        {JSON.stringify({
+                            "@context": "https://schema.org",
+                            "@type": "BlogPosting",
+                            headline: currentArticle.title,
+                            description: currentArticle.excerpt,
+                            image: [currentArticle.image],
+                            author: {
+                                "@type": "Person",
+                                name: currentArticle.author,
+                                url: `${process.env.NEXT_PUBLIC_SITE_URL}/authors/${currentArticle.authorSlug || "team"}`
+                            },
+                            publisher: {
+                                "@type": "Organization",
+                                name: "jotalpestcontrol",
+                                logo: {
+                                    "@type": "ImageObject",
+                                    url: `${process.env.NEXT_PUBLIC_SITE_URL}/logo.png`
+                                }
+                            },
+                            datePublished: currentArticle.date,
+                            dateModified: currentArticle.updatedAt || currentArticle.date,
+                            mainEntityOfPage: {
+                                "@type": "WebPage",
+                                "@id": `${process.env.NEXT_PUBLIC_SITE_URL}/blog/${currentArticle.slug}`
+                            },
+                            articleBody: currentArticle.full,
+                            inLanguage: language === "ar" ? "ar" : "en"
+                        })}
+                    </Script>
+                </div>
             </div>
-        </div>
+        </>
     )
 }
 
