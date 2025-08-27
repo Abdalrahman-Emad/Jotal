@@ -6,6 +6,7 @@ import { useLanguage } from "./language-context"
 import { Calendar, User, ArrowRight } from "lucide-react"
 import { motion } from "framer-motion"
 import Script from "next/script"
+import { getFeaturedBlogs } from "../app/blog-data"
 
 const Blog = () => {
   const { language } = useLanguage()
@@ -18,60 +19,7 @@ const Blog = () => {
       readTime: "Read time:",
       readMore: "Read Full Article",
       ctaService: "Book Service Now",
-      articles: [
-        {
-          id: 1,
-          slug: "cockroach-control-jeddah",
-          lang: "en",
-          title: "Cockroach Control in Jeddah – Jotal International",
-          excerpt:
-            "Discover Jotal International’s cockroach control services in Jeddah using the latest safe pesticides at affordable prices for all customers.",
-          seoTitle: "Cockroach Control in Jeddah | Jotal International",
-          seoDescription:
-            "Jotal International provides cockroach control services in Jeddah with the latest safe pesticides, professional staff, and guaranteed effective extermination at competitive prices.",
-          canonicalUrl: `${process.env.NEXT_PUBLIC_SITE_URL}/en/blog/cockroach-control-jeddah`,
-          image: "/article1.webp",
-          author: "Jotal International",
-          date: "2025-08-24",
-          tags: ["Cockroach Control", "Jeddah", "Jotal"],
-          readTime: "3 minutes",
-        },
-        {
-          id: 2,
-          slug: "rat-control-jeddah",
-          lang: "en",
-          title: "Rat Control in Jeddah – Jotal International",
-          excerpt:
-            "Jotal International provides professional rat control services in Jeddah using safe pesticides approved by the Saudi Ministry of Health, ensuring complete extermination with no return.",
-          seoTitle: "Rat Control in Jeddah | Jotal International",
-          seoDescription:
-            "Get the best rat control services in Jeddah with Jotal International. We use licensed pesticides and a professional team to ensure full extermination at competitive prices.",
-          canonicalUrl: `${process.env.NEXT_PUBLIC_SITE_URL}/en/blog/rat-control-jeddah`,
-          image: "/article2.webp",
-          author: "Jotal International",
-          date: "2025-08-24",
-          tags: ["Rat Control", "Jeddah", "Jotal"],
-          readTime: "4 minutes",
-        },
-        {
-          id: 3,
-          slug: "best-pest-control-jeddah",
-          lang: "en",
-          title: "Best Pest Control Company in Jeddah – Jotal Global",
-          excerpt:
-            "Jotal Global is considered the best pest control company in Jeddah, with years of experience, licensed safe pesticides, and advanced plans that guarantee complete elimination of pests at competitive prices.",
-          seoTitle: "Best Pest Control in Jeddah | Jotal Global Company",
-          seoDescription:
-            "Jotal Global offers professional pest control services in Jeddah using the latest safe pesticides and a specialized team, with full extermination guarantee and follow-up services at competitive prices.",
-          canonicalUrl: `${process.env.NEXT_PUBLIC_SITE_URL}/en/blog/best-pest-control-jeddah`,
-          image: "/article3.webp",
-          author: "Jotal International",
-          date: "2025-08-24",
-          tags: ["Pest Control", "Jeddah", "Jotal"],
-          readTime: "4 min",
-
-        }
-      ],
+      viewAllArticles: "View All Articles", // Added view all articles text
     },
     ar: {
       sectionTitle: "رؤى خبراء مكافحة الآفات",
@@ -80,61 +28,11 @@ const Blog = () => {
       readTime: "وقت القراءة:",
       readMore: "اقرأ المقال كاملاً",
       ctaService: "احجز خدمة الآن",
-      articles: [
-        {
-          id: 1,
-          slug: "cockroach-control-jeddah",
-          lang: "ar",
-          title: "مكافحة الصراصير بجدة – جوتال العالمية",
-          excerpt:
-            "تعرف على خدمات شركة جوتال العالمية لمكافحة الصراصير بجدة باستخدام أحدث المبيدات الآمنة وبأسعار مناسبة لجميع العملاء.",
-          seoTitle: "مكافحة الصراصير بجدة | شركة جوتال العالمية",
-          seoDescription:
-            "شركة جوتال العالمية تقدم خدمات مكافحة الصراصير بجدة باستخدام أحدث المبيدات الآمنة، عمالة محترفة، وضمان إبادة فعالة بأسعار تنافسية.",
-          canonicalUrl: `${process.env.NEXT_PUBLIC_SITE_URL}/ar/blog/cockroach-control-jeddah`,
-          image: "/article1.webp",
-          author: "شركة جوتال العالمية",
-          date: "2025-08-24",
-          tags: ["مكافحة الصراصير", "جدة", "جوتال"],
-          readTime: "3 دقائق",
-        },
-        {
-          id: 2,
-          slug: "rat-control-jeddah",
-          lang: "ar",
-          title: "مكافحة الفئران بجدة – جوتال العالمية",
-          excerpt:
-            "شركة جوتال العالمية تقدم خدمة مكافحة الفئران بجدة باستخدام مبيدات آمنة مرخصة من وزارة الصحة السعودية مع ضمان إبادة نهائية وبدون عودة.",
-          seoTitle: "مكافحة الفئران بجدة | شركة جوتال العالمية",
-          seoDescription:
-            "احصل على أفضل خدمات مكافحة الفئران بجدة من شركة جوتال العالمية باستخدام أحدث المبيدات المرخصة والفريق المحترف مع أسعار تنافسية وضمان إبادة كاملة.",
-          canonicalUrl: `${process.env.NEXT_PUBLIC_SITE_URL}/ar/blog/rat-control-jeddah`,
-          image: "/article2.webp",
-          author: "شركة جوتال العالمية",
-          date: "2025-08-24",
-          tags: ["مكافحة الفئران", "جدة", "جوتال"],
-          readTime: "4 دقائق",
-        },
-        {
-          id: 3,
-          slug: "best-pest-control-jeddah",
-          lang: "ar",
-          title: "أفضل شركة مكافحة حشرات بجدة – جوتال العالمية",
-          excerpt:
-            "جوتال العالمية تُعد أفضل شركة مكافحة حشرات بجدة، بخبرة تمتد لسنوات، وباستخدام مبيدات آمنة ومرخصة، وخطط متطورة تضمن القضاء التام على الحشرات بأسعار تنافسية.",
-          seoTitle: "أفضل شركة مكافحة حشرات بجدة | شركة جوتال العالمية",
-          seoDescription:
-            "شركة جوتال العالمية تقدم خدمات مكافحة الحشرات في جدة باستخدام أحدث المبيدات الآمنة والفريق المتخصص مع ضمان إبادة كاملة وخدمات متابعة بأسعار تنافسية.",
-          canonicalUrl: `${process.env.NEXT_PUBLIC_SITE_URL}/ar/blog/best-pest-control-jeddah`,
-          image: "/article3.webp",
-          author: "شركة جوتال العالمية",
-          date: "2025-08-24",
-          tags: ["مكافحة الحشرات", "جدة", "جوتال"],
-          readTime: "4 دقائق",
-        },
-      ],
+      viewAllArticles: "عرض جميع المقالات", // Added view all articles text in Arabic
     },
   }
+
+  const articles = getFeaturedBlogs(language, 3)
 
   return (
     <section className="py-20 bg-gradient-to-br from-slate-50 via-white to-emerald-50" id="blog">
@@ -150,7 +48,7 @@ const Blog = () => {
 
         {/* Articles Grid */}
         <div className="grid lg:grid-cols-3 md:grid-cols-2 gap-8">
-          {content[language].articles.map((article, index) => (
+          {articles.map((article, index) => (
             <motion.article
               key={article.id}
               initial={{ opacity: 0, y: 20 }}
@@ -160,11 +58,11 @@ const Blog = () => {
               itemScope
               itemType="https://schema.org/BlogPosting"
             >
-              {/* صورة المقال */}
+              {/* Article Image */}
               <div className="relative overflow-hidden">
                 <Image
                   src={article.image || "/placeholder.svg?height=280&width=400&query=pest control article"}
-                  alt={article.title}
+                  alt={article.imageAlt || article.title}
                   width={400}
                   height={280}
                   className="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-110"
@@ -174,7 +72,7 @@ const Blog = () => {
                 <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
               </div>
 
-              {/* محتوى المقال */}
+              {/* Article Content */}
               <div className="p-8 flex flex-col flex-grow">
                 {/* Article Meta */}
                 <div
@@ -206,7 +104,7 @@ const Blog = () => {
                   {article.excerpt}
                 </p>
 
-                {/* Actions ثابتة تحت */}
+                {/* Actions */}
                 <div
                   className={`flex items-center justify-between mt-auto ${language === "ar" ? "flex-row-reverse" : ""}`}
                 >
@@ -237,36 +135,47 @@ const Blog = () => {
                 {JSON.stringify({
                   "@context": "https://schema.org",
                   "@type": "BlogPosting",
-                  "headline": article.title,
-                  "image": [`https://jotalpestcontrol.com${article.image}`],
-                  "author": {
+                  headline: article.title,
+                  image: [`https://jotalpestcontrol.com${article.image}`],
+                  author: {
                     "@type": "Organization",
-                    "name": article.author
+                    name: article.author,
                   },
-                  "publisher": {
+                  publisher: {
                     "@type": "Organization",
-                    "name": "Expert Pest Control",
-                    "logo": {
+                    name: "Expert Pest Control",
+                    logo: {
                       "@type": "ImageObject",
-                      "url": "https://jotalpestcontrol.com/logo.webp"
-                    }
+                      url: "https://jotalpestcontrol.com/logo.webp",
+                    },
                   },
-                  "datePublished": article.date,
-                  "dateModified": article.updatedAt || article.date,
-                  "description": article.excerpt,
-                  "inLanguage": language === "ar" ? "ar" : "en",
-                  "keywords": article.tags ? article.tags.join(", ") : "",
-                  "mainEntityOfPage": {
+                  datePublished: article.date,
+                  dateModified: article.updatedAt || article.date,
+                  description: article.excerpt,
+                  inLanguage: language === "ar" ? "ar" : "en",
+                  keywords: article.tags ? article.tags.join(", ") : "",
+                  mainEntityOfPage: {
                     "@type": "WebPage",
-                    "@id": `https://jotalpestcontrol.com/blog/${article.slug}`
-                  }
-                }
-                )}
+                    "@id": `https://jotalpestcontrol.com/blog/${article.slug}`,
+                  },
+                })}
               </Script>
             </motion.article>
           ))}
         </div>
 
+        <div className="text-center mt-12">
+          <Link
+            href="/blog"
+            className={`inline-flex items-center gap-3 bg-emerald-600 hover:bg-emerald-700 text-white px-8 py-4 rounded-2xl font-semibold text-lg shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 ${language === "ar" ? "flex-row-reverse" : ""}`}
+          >
+            <span>{content[language].viewAllArticles}</span>
+            <ArrowRight
+              size={20}
+              className={`transition-transform group-hover:translate-x-1 ${language === "ar" ? "rotate-180" : ""}`}
+            />
+          </Link>
+        </div>
       </div>
     </section>
   )

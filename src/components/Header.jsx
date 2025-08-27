@@ -4,6 +4,7 @@ import { useState } from "react"
 import { Menu, X, Phone, Globe } from "lucide-react"
 import { useLanguage } from "./language-context"
 import Image from "next/image"
+import Link from "next/link"
 
 const Header = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -37,21 +38,24 @@ const Header = () => {
             <div className="max-w-7xl mx-auto px-4 py-4">
                 <div className="flex justify-between items-center">
                     {/* Logo */}
-                    <div className="flex items-center gap-3">
-                        <Image
-                            src="/logo.webp"
-                            alt="Jotal Logo - شركة جوتال للتنظيف والتعقيم"
-                            width={60}
-                            height={60}
-                            className="object-contain rounded-lg"
-                            priority
-                        />
+<div className="flex items-center gap-3">
+  <Link href="/" className="flex items-center gap-3">
+    <Image
+      src="/logo.webp"
+      alt="Jotal Logo - شركة جوتال للتنظيف والتعقيم"
+      width={60}
+      height={60}
+      className="object-contain rounded-lg"
+      priority
+    />
 
-                        <div>
-                            <h1 className="font-bold text-2xl text-green-700">Jotal International Co</h1>
-                        </div>
-
-                    </div>
+    <div>
+      <h1 className="font-bold text-2xl text-green-700">
+        Jotal International Co
+      </h1>
+    </div>
+  </Link>
+</div>
 
 
                     {/* Desktop Navigation */}
