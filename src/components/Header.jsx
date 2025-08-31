@@ -38,24 +38,24 @@ const Header = () => {
             <div className="max-w-7xl mx-auto px-4 py-4">
                 <div className="flex justify-between items-center">
                     {/* Logo */}
-<div className="flex items-center gap-3">
-  <Link href="/" className="flex items-center gap-3">
-    <Image
-      src="/logo.webp"
-      alt="Jotal Logo - شركة جوتال للتنظيف والتعقيم"
-      width={60}
-      height={60}
-      className="object-contain rounded-lg"
-      priority
-    />
+                    <div className="flex items-center gap-3">
+                        <Link href="/" className="flex items-center gap-3">
+                            <Image
+                                src="/logo.webp"
+                                alt="Jotal Logo - شركة جوتال للتنظيف والتعقيم"
+                                width={60}
+                                height={60}
+                                className="object-contain rounded-lg"
+                                priority
+                            />
 
-    <div>
-      <h1 className="font-bold text-2xl text-green-700">
-        Jotal International Co
-      </h1>
-    </div>
-  </Link>
-</div>
+                            <div>
+                                <h1 className="font-bold text-2xl text-green-700">
+                                    Jotal International Co
+                                </h1>
+                            </div>
+                        </Link>
+                    </div>
 
 
                     {/* Desktop Navigation */}
@@ -105,7 +105,7 @@ const Header = () => {
                             <span className="text-sm font-medium">{content[language].call}</span>
                         </a>
                         <a
-                            href="#contact"
+                            href="/#contact"
                             className="bg-gradient-to-r from-green-600 to-green-700 text-white px-6 py-2 rounded-full hover:from-green-700 hover:to-green-800 transition-all shadow-lg hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
                         >
                             {content[language].bookNow}
@@ -133,7 +133,7 @@ const Header = () => {
                             aria-label={language === "ar" ? "التنقل المحمول" : "Mobile navigation"}
                         >
                             <a
-                                href="#services"
+                                href="/#services"
                                 className="text-gray-700 hover:text-green-700 transition-colors font-medium py-2 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 rounded-md px-2"
                                 onClick={() => setIsMenuOpen(false)}
                             >
@@ -147,7 +147,7 @@ const Header = () => {
                                 {content[language].about}
                             </a>
                             <a
-                                href="#contact"
+                                href="/#contact"
                                 className="text-gray-700 hover:text-green-700 transition-colors font-medium py-2 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 rounded-md px-2"
                                 onClick={() => setIsMenuOpen(false)}
                             >
